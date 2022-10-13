@@ -6,15 +6,20 @@ import {createStore} from 'redux';
 const reducer = (state = {counter : 0}, action) =>{
     if(action.type === 'increment'){
         return {
-            counter : state.counter + 2,
+            counter : state.counter + 1,
         };
         
     }
     if(action.type === 'decrement'){
         return {
-            counter : state.counter - 2,
+            counter : state.counter - 1,
         }
         
+    }
+    if(action.type === 'incrementBy5'){
+        return {
+            counter: state.counter+5,
+        }
     }
     return state;
 }
