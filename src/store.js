@@ -1,36 +1,58 @@
-import {createStore} from 'redux';
+//import {createStore} from 'redux';
+import {createSlice, configureStore} from '@reduxjs/toolkit'
  
-/*steps  1: define reducer 2: create store 3: component that subscribes the store nd finally dispatching the action */
+/*steps  1: define reducer 
+2: create store and connect store to reducer
+3: component that subscribes the store nd
+ finally dispatching the action */
+const initialCounterState = { counter : 0, showCounter:true }
 
+const counterSlice = createSlice({
+    name: 'counter',
+    initialState:initialCounterState,
+    reducers:{
+        increment(state){
+            state.counter++;
+        },
+        decrement(state){
+            state.counter--;
+        },
 
-const reducer = (state = {counter : 0}, action) =>{
-    if(action.type === 'increment'){
-        return {
-            counter : state.counter + 1,
-        };
+        increase(state,action){
+            state.counter = state.counter + action.payload;
+               },
+        decrease(state, action){
+            state.counter = state.counter-action.payload;
+        },
+        toggleCounter(state){
+            state.showCounter = !state.showCounter;
+        },
         
     }
-    if(action.type === 'decrement'){
-        return {
-            counter : state.counter - 1,
-        }
+});
+const initialAuthState = {isAuthenticated: false}
+const authSlice = createSlice({
+    name:'auth',
+   initialState: initialAuthState,
+    reducers:{
+        login(state){
+            state.isAuthenticated = true
+        },
+        logout(state){
+            state.isAuthenticated = false
+        },
         
     }
-    if(action.type === 'incrementBy5'){
-        return {
-            counter: state.counter+5,
-        }
+
+})
+const store = configureStore({ 
+    reducer: { counter:counterSlice.reducer,
+        auth:authSlice.reducer
     }
-    return state;
-}
-const store = createStore(reducer);
+});
 
 
-// const subscriberCount = () => {
-//     const latestState = store.getState();
-//     console.log(latestState)
-// }
-// store.subscribe(subscriberCount);
-// store.dispatch({type:'increment'})
+export const authActions = authSlice.actions;
+export const counterActions = counterSlice.actions;
 
 export default store;
