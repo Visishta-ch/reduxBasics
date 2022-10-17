@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-
 import { uiActions } from '../../store/ui-slice';
 import classes from './CartButton.module.css';
 
@@ -13,9 +12,6 @@ const CartButton = (props) => {
     console.log('toggling');
   };
 
-  // const toggleCartHandler = () => {
-  //   console.log('toggling')
-  // }
 
   return (
     <button className={classes.button} onClick={toggleCartHandler}>
